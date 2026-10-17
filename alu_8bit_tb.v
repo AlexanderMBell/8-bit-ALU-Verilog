@@ -1,41 +1,48 @@
 `timescale 1ns / 1ps
 
+//8-Bit ALU Test Bench
 module alu_8bit_tb;
 
+  //Declare Variables
   reg[7:0] a,b;
   wire[7:0] r;
   reg[2:0] opt;
   wire Z,N,C,V;
-
   integer i,j,err;
   reg[7:0] expec;
 
+  //Instantiate Module
   alu_8bit inst1 (.input_1(a),.input_2(b),.opt(opt),.result(r),.Z(Z),.N(N),.C(C),.V(V));
 
-  //Verify addition cases
+  //Verify All Cases
   initial begin
 
     //Addition Cases
     err = 0;
     opt = 3'b000;
 
+    //Loop through all possible values for 8b (same process on operations below)
     for (i = 0; i < 256; i = i + 1) begin
       for(j = 0; j < 256; j = j + 1) begin
 
         a = i;
         b = j;
+        //expected value
         expec = a + b;
         #1;
 
+        //compare expected value to instance
         if (r !== expec) begin
           err = err + 1;
           $display("Addition Error at a=%b, b=%b",a,b);
         end
       end
     end
+    //feedback on addition errors
     $display("%0d addition errors",err);
 
-    //Subtraction Cases
+
+    //Subtraction Cases (same process as addition)
     err = 0;
     opt = 3'b001;
 
@@ -55,7 +62,8 @@ module alu_8bit_tb;
     end
     $display("%0d subtracton errors",err);
 
-    //And Cases
+
+    //And Cases (same process as addition)
     err = 0;
     opt = 3'b010;
 
@@ -75,7 +83,8 @@ module alu_8bit_tb;
     end
     $display("%0d And errors",err);
 
-    //Or Cases
+
+    //Or Cases (same process as addition)
     err = 0;
     opt = 3'b011;
 
@@ -95,7 +104,8 @@ module alu_8bit_tb;
     end
     $display("%0d Or errors",err);
 
-    //XOR Cases
+
+    //XOR Cases (same process as addition)
     err = 0;
     opt = 3'b111;
 
@@ -114,7 +124,9 @@ module alu_8bit_tb;
       end
     end
     $display("%0d XOR errors",err);
-    $finish();
 
+
+    $finish();
   end
+
 endmodule

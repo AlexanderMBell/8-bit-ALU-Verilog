@@ -1,13 +1,16 @@
 `timescale 1ns / 1ps
 
+//Half-Adder Module (First Verilog Ever)
 module half_adder (input_1, input_2, c_1, s_1);
 
-input input_1;
-input input_2;
-output c_1;
-output s_1;
+    // I/O
+    input input_1;
+    input input_2;
+    output c_1;
+    output s_1;
 
-assign c_1 = input_1 & input_2;
-assign s_1 = ((!(input_1 & input_2))&(input_1 | input_2));
+    //Determine Initial Carry and Initial Sum
+    assign c_1 = input_1 & input_2;
+    assign s_1 = ((!(input_1 & input_2))&(input_1 | input_2));
 
 endmodule
